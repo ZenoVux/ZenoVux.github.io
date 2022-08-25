@@ -1,0 +1,22 @@
+Lệnh chat:
+
+- icon: get icon theo khoảng
+- icon [id]: get icon theo id
+- iconmin [min]: set min lấy icon theo khoảng
+- iconmax [max]: set max lấy icon theo khoảng
+
+- bg: get bg theo khoảng
+- bg [id]: get bg theo id
+- bgmin [min]: set min lấy bg theo khoảng
+- bgmax [max]: set max lấy bg theo khoảng
+
+- eff: tự động get eff theo khoảng
+- eff [id]: get eff theo id
+- eff min [min]: set min lấy eff theo khoảng
+- effmax [max]: set max lấy eff theo khoảng
+
+- aura [id]: get aura theo id
+- mount [id]: get mount theo id
+
+File cấu hình config.txt:
+- [zoomlevel]|[get_all_msg][true-false]
