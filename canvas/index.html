@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+</head>
+
+<body>
+    <canvas id="preview-canvas" width="900" height="900" style="border: 1px solid black;"></canvas>
+    <p>Heart</p>
+    <button onclick="prevHeart()">Prev</button>
+    <button onclick="nextHeart()">Next</button>
+    <p>Color</p>
+    <button onclick="prevColor()">Prev</button>
+    <button onclick="nextColor()">Next</button>
+    <p>Ball</p>
+    <button onclick="prevBall()">Prev</button>
+    <button onclick="nextBall()">Next</button>
+    <p>Text</p>
+    <input id="ipnut-text" type="text" onkeydown="changeText()" readonly>
+    
+    <!-- <button onclick="download()">Download</button> -->
+    <script>
+        const hearts = [
+            [
+                "https://cdn.customily.com/product-images/76c5a87c-7f54-479d-beb8-5d7e850fec17.png",
+                "https://cdn.customily.com/product-images/c88440d4-8ab8-4987-9ae1-2c4d11cee17a.png",
+                "https://cdn.customily.com/product-images/30b18cb9-e044-421a-b539-2eb8fc875bac.png",
+                "https://cdn.customily.com/product-images/31908e5a-261a-41b0-a386-81de8f271413.png",
+                "https://cdn.customily.com/product-images/38974509-1dcd-479c-ad6f-96c37f9fdf8d.png",
+                "https://cdn.customily.com/product-images/ce9cb53f-2a24-4307-bb4a-7ba3952180f7.png",
+                "https://cdn.customily.com/product-images/e0a7af32-281b-4143-a537-efa29611df0a.png",
+                "https://cdn.customily.com/product-images/6ec0be5b-e9e7-45f0-a079-f0800d1e3e50.png",
+                "https://cdn.customily.com/product-images/beb63b7e-03e3-4a91-9c2b-f5fd75fb70df.png",
+                "https://cdn.customily.com/product-images/28a8131c-c5bc-40b5-b110-32381f8173c0.png"
+            ],
+            [
+                "https://cdn.customily.com/product-images/48deb5e7-05ac-4c4f-b3ea-a629766e2524.png",
+                "https://cdn.customily.com/product-images/0e55c898-57e1-4fa5-84c0-53dbf4162eee.png",
+                "https://cdn.customily.com/product-images/6f950705-49c7-41eb-a273-b7d5f532b0d0.png",
+                "https://cdn.customily.com/product-images/38778dfa-6974-459f-ae0c-2747bc14921a.png",
+                "https://cdn.customily.com/product-images/4bafc955-c1c9-4ed4-aae3-87abe61982c2.png",
+                "https://cdn.customily.com/product-images/56897ee2-d351-45b8-949f-9f9d0ef8cfbf.png",
+                "https://cdn.customily.com/product-images/47a0f126-1096-4b65-8def-ef51402225e9.png",
+                "https://cdn.customily.com/product-images/03070c8a-c31f-49d0-a5df-dcd464d661b9.png",
+                "https://cdn.customily.com/product-images/5a501f44-77b6-46a8-8f20-dd935a430dd3.png",
+                "https://cdn.customily.com/product-images/72b2f6d8-a3ff-4fb3-8d00-81d6d1a1173d.png"
+            ],
+            [
+                "https://cdn.customily.com/product-images/d2adffad-665f-4a00-bce8-3b564ca883a7.png",
+                "https://cdn.customily.com/product-images/4278415d-027c-4ace-adbb-d64c8d83b3bb.png",
+                "https://cdn.customily.com/product-images/b1228328-4064-4e10-941f-0a2e0b4d706f.png",
+                "https://cdn.customily.com/product-images/53284e53-d2c5-44d9-9f5c-f6729edbbdb6.png",
+                "https://cdn.customily.com/product-images/a2040717-6419-4a27-8331-cc2f9251b7a4.png",
+                "https://cdn.customily.com/product-images/8436bff5-d653-462e-9c1f-e45602dcdc92.png",
+                "https://cdn.customily.com/product-images/cbb84484-2309-46d8-b1fc-04170ff94cfa.png",
+                "https://cdn.customily.com/product-images/ab5e9e2b-2a6b-4a9e-a181-727c32cbc09a.png",
+                "https://cdn.customily.com/product-images/1e5aa1f0-5c8a-4ede-bb9e-8f7ef22bed86.png",
+                "https://cdn.customily.com/product-images/2ea219da-87aa-4720-9a4a-7daa93cf991c.png"
+            ],
+            [
+                "https://cdn.customily.com/product-images/31cf1c3e-1a53-4f54-9650-550a51c97ef4.png",
+                "https://cdn.customily.com/product-images/32f1db71-5532-48f8-adcd-4fa04787ab14.png",
+                "https://cdn.customily.com/product-images/4ba75037-80e5-4ed1-89e9-3d057c0bfbe9.png",
+                "https://cdn.customily.com/product-images/ed68484c-fd6e-4742-811a-5e61045c475a.png",
+                "https://cdn.customily.com/product-images/e9a6171a-ccce-4794-8dce-35297bdb692e.png",
+                "https://cdn.customily.com/product-images/9b88992b-b0e8-48ea-bfbc-ccdb8ba4e2e2.png",
+                "https://cdn.customily.com/product-images/e0fc6ca9-9083-4c35-b76a-4b84fe8dff8c.png",
+                "https://cdn.customily.com/product-images/94155a04-db0f-48ce-8143-cc56c494accc.png",
+                "https://cdn.customily.com/product-images/f296e46d-f0b0-4266-b2e9-a4b3a2c6d3b6.png",
+                "https://cdn.customily.com/product-images/bff69c88-aee6-4c56-9e97-4f21fab69eb7.png"
+            ]
+        ]
+        const balls = [
+            "https://cdn.customily.com/product-images/77160bc2-2ef0-4531-b2cb-ba21cf3d3e80.png",
+            "https://cdn.customily.com/product-images/26a315ac-52ba-4523-9b76-bcc6420289dc.png",
+            "https://cdn.customily.com/product-images/ecc3a339-f72f-4f94-8505-30280ed8b976.png",
+            "https://cdn.customily.com/product-images/d9986231-b667-48a6-a060-4392307e5e8b.png",
+            "https://cdn.customily.com/product-images/9c2573e0-117e-4537-a354-036846f4062d.png",
+            "https://cdn.customily.com/product-images/b7d9d13c-e94f-4e64-8390-556446a4890e.png"
+        ]
+
+        const canvas = document.getElementById("preview-canvas");
+        const input = document.getElementById("ipnut-text");
+        const ctx = canvas.getContext("2d");
+        const imageHeart = new Image();
+        const imageBall = new Image();
+
+        var indexHeart = 0;
+        var indexColor = 0;
+        var indexBall = 0;
+
+        async function loadHeart() {
+            imageHeart.src = hearts[indexHeart][indexColor];
+            imageHeart.onload = async function () {
+                render();
+            }
+        }
+
+        async function loadBall() {
+            imageBall.src = balls[indexBall];
+            imageBall.onload = async function () {
+                render();
+            };
+        }
+
+        async function changeText() {
+            render();
+        }
+
+        function prevHeart() {
+            indexHeart--;
+            indexColor = 0;
+            if (indexHeart < 0) {
+                indexHeart = hearts.length - 1;
+            }
+            loadHeart();
+        }
+
+        function nextHeart() {
+            indexHeart++;
+            indexColor = 0;
+            if (indexHeart >= hearts.length) {
+                indexHeart = 0;
+            }
+            loadHeart();
+        }
+
+        function prevColor() {
+            indexColor--;
+            if (indexColor < 0) {
+                indexColor = hearts[indexHeart].length - 1;
+            }
+            loadHeart();
+        }
+
+        function nextColor() {
+            indexColor++;
+            if (indexColor >= hearts[indexHeart].length) {
+                indexColor = 0;
+            }
+            loadHeart();
+        }
+
+        function prevBall() {
+            indexBall--;
+            if (indexBall < 0) {
+                indexBall = balls.length - 1;
+            }
+            loadBall();
+        }
+
+        function nextBall() {
+            indexBall++;
+            if (indexBall >= balls.length) {
+                indexBall = 0;
+            }
+            loadBall();
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(imageHeart, (canvas.width / 2) - (imageHeart.width / 2), (canvas.height / 2) - (imageHeart.height / 2));
+            ctx.drawImage(imageBall, (canvas.width / 2) - (imageBall.width / 2) + 10, (canvas.height / 2) - (imageBall.height / 2) + 50);
+
+            // ctx.fillStyle = "black";
+            // ctx.font = "bold 50px Arial";
+            // ctx.textAlign = "center";
+            // ctx.fillText(input.value, 500, 120);
+        }
+
+        function download() {
+            const a = document.createElement('a');
+            a.href = document.getElementById('preview-canvas').toDataURL("image/png");
+            a.download = "zeno.png";
+            a.click();
+        }
+
+        loadHeart();
+        loadBall();
+    </script>
+</body>
+
+</html>
